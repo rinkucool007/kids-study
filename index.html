@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive A-Z Book</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes wiggle {
+
+            0%,
+            100% {
+                transform: rotate(-3deg);
+            }
+
+            50% {
+                transform: rotate(3deg);
+            }
+        }
+
+        .bounce-animation {
+            animation: bounce 2s infinite;
+        }
+
+        .float-animation {
+            animation: float 3s infinite;
+        }
+
+        .wiggle-animation {
+            animation: wiggle 1s infinite;
+        }
+
+        .letter-trace {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        .letter-trace canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .letter-trace .guide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.active {
+            width: 16px;
+            height: 16px;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-blue-50 to-purple-50 min-h-screen font-sans">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Progress Dots -->
+        <div class="flex justify-center space-x-2 mb-6 flex-wrap">
+            <!-- Dynamically generated below -->
+            <!-- Total 54 pages = 54 dots -->
+            <!-- Generated via script or manually -->
+            <!-- Here we paste manually for clarity -->
+            <!-- You can generate with JS in production -->
+            <div class="progress-dot rounded-full bg-blue-300" data-page="0"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="1"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="2"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="3"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="4"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="5"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="6"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="7"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="8"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="9"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="10"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="11"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="12"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="13"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="14"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="15"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="16"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="17"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="18"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="19"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="20"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="21"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="22"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="23"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="24"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="25"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="26"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="27"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="28"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="29"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="30"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="31"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="32"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="33"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="34"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="35"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="36"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="37"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="38"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="39"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="40"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="41"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="42"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="43"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="44"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="45"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="46"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="47"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="48"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="49"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="50"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="51"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="52"></div>
+            <div class="progress-dot rounded-full bg-blue-300" data-page="53"></div>
+        </div>
+        
+        <!-- Book Pages -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 min-h-[500px] relative overflow-hidden">
+
+            <!-- Welcome Page -->
+            <div class="page active text-center" data-page="0">
+                <div
+                    class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 opacity-30">
+                </div>
+                <div class="relative z-10">
+                    <h1 class="text-5xl font-bold text-blue-600 mb-6 animate-pulse">Welcome to Alphabet A-Z!</h1>
+                    <p class="text-xl text-gray-700 mb-8">Let's learn the alphabet with fun animations and interactive
+                        tracing!</p>
+                    <div class="flex justify-center space-x-4 mb-8">
+                        <div class="text-6xl text-red-500 float-animation">A</div>
+                        <div class="text-6xl text-yellow-500 float-animation" style="animation-delay: 0.3s">B</div>
+                        <div class="text-6xl text-green-500 float-animation" style="animation-delay: 0.6s">C</div>
+                    </div>
+                    <button onclick="nextPage()"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg transform transition hover:scale-105">
+                        Start Learning <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter A -->
+            <div class="page" data-page="1">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-red-500 mb-2">Letter A</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-red-500 mb-8 bounce-animation">A</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/415/415733.png" alt="Apple"
+                                class="w-32 h-32 wiggle-animation">
+                            <div
+                                class="absolute -bottom-4 -right-4 bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm font-bold">
+                                Apple</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">A is for Apple! Listen to the sound:</p>
+                    <button onclick="playSound('A')"
+                        class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> A says "ah"
+                    </button>
+                </div>
+            </div>
+
+            <div class="page" data-page="2">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-red-500 mb-2">Trace Letter A</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter A</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasA" width="200" height="200"
+                            class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M40 180 L100 20 L160 180 M70 120 L130 120' fill='none' stroke='red' stroke-width='4'/></svg>"
+                            class="guide" alt="Letter A guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasA')"
+                        class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter B -->
+            <div class="page" data-page="3">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-blue-500 mb-2">Letter B</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-blue-500 mb-8 bounce-animation">B</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/5213/5213872.png" alt="Ball" class="w-32 h-32 float-animation">
+                            <div class="absolute -bottom-4 -right-4 bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm font-bold">Ball</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">B is for Ball! Listen to the sound:</p>
+                    <button onclick="playSound('B')" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> B says "buh"
+                    </button>
+                </div>
+            </div>
+            <div class="page" data-page="4">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-blue-500 mb-2">Trace Letter B</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter B</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasB" width="200" height="200" class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M40 20 L40 180 M40 20 Q100 20 100 60 Q100 100 40 100 M40 100 Q100 100 100 140 Q100 180 40 180' fill='none' stroke='blue' stroke-width='4'/></svg>" class="guide" alt="Letter B guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasB')" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter C -->
+            <div class="page" data-page="5">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-green-500 mb-2">Letter C</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-green-500 mb-8 bounce-animation">C</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1998/1998592.png" alt="Cat" class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div class="absolute -bottom-4 -right-4 bg-green-200 text-green-800 px-3 py-1 rounded-full text-sm font-bold">Cat</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">C is for Cat! Listen to the sound:</p>
+                    <button onclick="playSound('C')" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> C says "kuh"
+                    </button>
+                </div>
+            </div>
+            <div class="page" data-page="6">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-green-500 mb-2">Trace Letter C</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter C</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasC" width="200" height="200" class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M140 40 Q100 20 60 40 Q40 100 60 160 Q100 180 140 160' fill='none' stroke='green' stroke-width='4'/></svg>" class="guide" alt="Letter C guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasC')" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter D -->
+            <div class="page" data-page="7">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-yellow-500 mb-2">Letter D</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-yellow-500 mb-8 bounce-animation">D</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1998/1998627.png" alt="Dog" class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div class="absolute -bottom-4 -right-4 bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm font-bold">Dog</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">D is for Dog! Listen to the sound:</p>
+                    <button onclick="playSound('D')" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> D says "duh"
+                    </button>
+                </div>
+            </div>
+            <div class="page" data-page="8">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-yellow-500 mb-2">Trace Letter D</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter D</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasD" width="200" height="200" class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M60 30 L60 170 M60 30 Q160 100 60 170' fill='none' stroke='yellow' stroke-width='4'/></svg>" class="guide" alt="Letter D guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasD')" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter E -->
+            <div class="page" data-page="9">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-purple-500 mb-2">Letter E</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-purple-500 mb-8 bounce-animation">E</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1998/1998642.png" alt="Elephant" class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div class="absolute -bottom-4 -right-4 bg-purple-200 text-purple-800 px-3 py-1 rounded-full text-sm font-bold">Elephant</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">E is for Elephant! Listen to the sound:</p>
+                    <button onclick="playSound('E')" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> E says "eh"
+                    </button>
+                </div>
+            </div>
+            <div class="page" data-page="10">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-purple-500 mb-2">Trace Letter E</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter E</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasE" width="200" height="200" class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M60 30 L60 170 M60 30 L140 30 M60 100 L120 100 M60 170 L140 170' fill='none' stroke='purple' stroke-width='4'/></svg>" class="guide" alt="Letter E guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasE')" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter F -->
+            <div class="page" data-page="11">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-pink-500 mb-2">Letter F</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-pink-500 mb-8 bounce-animation">F</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3075/3075494.png" alt="Fish" class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div class="absolute -bottom-4 -right-4 bg-pink-200 text-pink-800 px-3 py-1 rounded-full text-sm font-bold">Fish</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">F is for Fish! Listen to the sound:</p>
+                    <button onclick="playSound('F')" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> F says "f"
+                    </button>
+                </div>
+            </div>
+            <div class="page" data-page="12">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-pink-500 mb-2">Trace Letter F</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter F</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasF" width="200" height="200" class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M60 30 L60 170 M60 30 L140 30 M60 100 L120 100' fill='none' stroke='pink' stroke-width='4'/></svg>" class="guide" alt="Letter F guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasF')" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter G -->
+            <div class="page" data-page="13">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-teal-500 mb-2">Letter G</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-teal-500 mb-8 bounce-animation">G</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/2395/2395826.png" alt="Giraffe" class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div class="absolute -bottom-4 -right-4 bg-teal-200 text-teal-800 px-3 py-1 rounded-full text-sm font-bold">Giraffe</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">G is for Giraffe! Listen to the sound:</p>
+                    <button onclick="playSound('G')" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> G says "g"
+                    </button>
+                </div>
+            </div>
+            <div class="page" data-page="14">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-teal-500 mb-2">Trace Letter G</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter G</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasG" width="200" height="200" class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M140 40 Q100 20 60 40 Q40 100 60 160 Q100 180 140 160 L140 100 L100 100' fill='none' stroke='teal' stroke-width='4'/></svg>" class="guide" alt="Letter G guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasG')" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter H -->
+            <div class="page" data-page="15">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-orange-500 mb-2">Letter H</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-orange-500 mb-8 bounce-animation">H</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/256/2751/2751847.png" alt="Horse" class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div class="absolute -bottom-4 -right-4 bg-orange-200 text-orange-800 px-3 py-1 rounded-full text-sm font-bold">Horse</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">H is for Horse! Listen to the sound:</p>
+                    <button onclick="playSound('H')" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> H says "h"
+                    </button>
+                </div>
+            </div>
+            <div class="page" data-page="16">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-orange-500 mb-2">Trace Letter H</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter H</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasH" width="200" height="200" class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M40 20 L40 180 M160 20 L160 180 M40 100 L160 100' fill='none' stroke='orange' stroke-width='4'/></svg>" class="guide" alt="Letter H guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasH')" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter I -->
+            <div class="page" data-page="17">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-indigo-500 mb-2">Letter I</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-indigo-500 mb-8 bounce-animation">I</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3157/3157356.png" alt="Ice Cream" class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div class="absolute -bottom-4 -right-4 bg-indigo-200 text-indigo-800 px-3 py-1 rounded-full text-sm font-bold">Ice Cream</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">I is for Ice Cream! Listen to the sound:</p>
+                    <button onclick="playSound('I')" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> I says "i"
+                    </button>
+                </div>
+            </div>
+            <div class="page" data-page="18">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-indigo-500 mb-2">Trace Letter I</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter I</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasI" width="200" height="200" class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M100 20 L100 180 M80 20 L120 20 M80 180 L120 180' fill='none' stroke='indigo' stroke-width='4'/></svg>" class="guide" alt="Letter I guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasI')" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter J -->
+            <div class="page" data-page="19">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-lime-500 mb-2">Letter J</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-lime-500 mb-8 bounce-animation">J</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/4726/4726190.png" alt="Jellyfish" class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div class="absolute -bottom-4 -right-4 bg-lime-200 text-lime-800 px-3 py-1 rounded-full text-sm font-bold">Jellyfish</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">J is for Jellyfish! Listen to the sound:</p>
+                    <button onclick="playSound('J')" class="bg-lime-500 hover:bg-lime-600 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> J says "j"
+                    </button>
+                </div>
+            </div>
+            <div class="page" data-page="20">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-lime-500 mb-2">Trace Letter J</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter J</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasJ" width="200" height="200" class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M100 20 L100 140 Q100 180 60 180' fill='none' stroke='lime' stroke-width='4'/></svg>" class="guide" alt="Letter J guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasJ')" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter K -->
+            <div class="page" data-page="21">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-cyan-500 mb-2">Letter K</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-cyan-500 mb-8 bounce-animation">K</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/4395/4395882.png" alt="Kangaroo" class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div class="absolute -bottom-4 -right-4 bg-cyan-200 text-cyan-800 px-3 py-1 rounded-full text-sm font-bold">Kangaroo</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">K is for Kangaroo! Listen to the sound:</p>
+                    <button onclick="playSound('K')" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> K says "k"
+                    </button>
+                </div>
+            </div>
+            <div class="page" data-page="22">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-cyan-500 mb-2">Trace Letter K</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter K</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasK" width="200" height="200" class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M40 20 L40 180 M40 100 L140 20 M40 100 L140 180' fill='none' stroke='cyan' stroke-width='4'/></svg>" class="guide" alt="Letter K guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasK')" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter L -->
+            <div class="page" data-page="23">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-rose-500 mb-2">Letter L</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-rose-500 mb-8 bounce-animation">L</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/8876/8876610.png" alt="Lion" class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div class="absolute -bottom-4 -right-4 bg-rose-200 text-rose-800 px-3 py-1 rounded-full text-sm font-bold">Lion</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">L is for Lion! Listen to the sound:</p>
+                    <button onclick="playSound('L')" class="bg-rose-500 hover:bg-rose-600 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> L says "l"
+                    </button>
+                </div>
+            </div>
+            <div class="page" data-page="24">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-rose-500 mb-2">Trace Letter L</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter L</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasL" width="200" height="200" class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M40 20 L40 180 L140 180' fill='none' stroke='rose' stroke-width='4'/></svg>" class="guide" alt="Letter L guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasL')" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter M -->
+            <div class="page" data-page="25">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-violet-500 mb-2">Letter M</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-violet-500 mb-8 bounce-animation">M</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1998/1998721.png" alt="Monkey" class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div class="absolute -bottom-4 -right-4 bg-violet-200 text-violet-800 px-3 py-1 rounded-full text-sm font-bold">Monkey</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">M is for Monkey! Listen to the sound:</p>
+                    <button onclick="playSound('M')" class="bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> M says "m"
+                    </button>
+                </div>
+            </div>
+            <div class="page" data-page="26">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-violet-500 mb-2">Trace Letter M</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter M</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasM" width="200" height="200" class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M40 180 L40 20 L100 100 L160 20 L160 180' fill='none' stroke='violet' stroke-width='4'/></svg>" class="guide" alt="Letter M guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasM')" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter N -->
+            <div class="page" data-page="27">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-blue-400 mb-2">Letter N</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-blue-400 mb-8 bounce-animation">N</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/427/427432.png" alt="Nest" class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div class="absolute -bottom-4 -right-4 bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm font-bold">Nest</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">N is for Nest! Listen to the sound:</p>
+                    <button onclick="playSound('N')" class="bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> N says "n"
+                    </button>
+                </div>
+            </div>
+            <div class="page" data-page="28">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-blue-400 mb-2">Trace Letter N</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter N</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasN" width="200" height="200" class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M40 180 L40 20 L160 180 L160 20' fill='none' stroke='blue' stroke-width='4'/></svg>" class="guide" alt="Letter N guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasN')" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter O -->
+            <div class="page" data-page="29">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-amber-500 mb-2">Letter O</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-amber-500 mb-8 bounce-animation">O</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1864/1864521.png" alt="Owl" class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div class="absolute -bottom-4 -right-4 bg-amber-200 text-amber-800 px-3 py-1 rounded-full text-sm font-bold">Owl</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">O is for Owl! Listen to the sound:</p>
+                    <button onclick="playSound('O')" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> O says "oh"
+                    </button>
+                </div>
+            </div>
+            <div class="page" data-page="30">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-amber-500 mb-2">Trace Letter O</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter O</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasO" width="200" height="200" class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M100 20 Q160 20 160 100 Q160 180 100 180 Q40 180 40 100 Q40 20 100 20' fill='none' stroke='amber' stroke-width='4'/></svg>" class="guide" alt="Letter O guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasO')" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter P -->
+            <div class="page" data-page="31">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-emerald-500 mb-2">Letter P</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-emerald-500 mb-8 bounce-animation">P</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/6485/6485718.png" alt="Panda" class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div class="absolute -bottom-4 -right-4 bg-emerald-200 text-emerald-800 px-3 py-1 rounded-full text-sm font-bold">Panda</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">P is for Panda! Listen to the sound:</p>
+                    <button onclick="playSound('P')" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> P says "p"
+                    </button>
+                </div>
+            </div>
+            <div class="page" data-page="32">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-emerald-500 mb-2">Trace Letter P</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter P</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasP" width="200" height="200" class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M40 20 L40 180 M40 20 Q100 20 100 100 Q100 100 40 100' fill='none' stroke='emerald' stroke-width='4'/></svg>" class="guide" alt="Letter P guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasP')" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter Q -->
+            <div class="page" data-page="33">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-blue-400 mb-2">Letter Q</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-blue-400 mb-8 bounce-animation">Q</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1330/1330320.png" alt="Queen" class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div class="absolute -bottom-4 -right-4 bg-blue-200 text-blue-800 px-3 py-1 rounded-full text-sm font-bold">Queen</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">Q is for Queen! Listen to the sound:</p>
+                    <button onclick="playSound('Q')" class="bg-blue-400 hover:bg-blue-500 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> Q says "kw"
+                    </button>
+                </div>
+            </div>
+            <div class="page" data-page="34">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-blue-400 mb-2">Trace Letter Q</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter Q</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasQ" width="200" height="200" class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M100 20 Q160 20 160 100 Q160 180 100 180 Q40 180 40 100 Q40 20 100 20 M120 120 L160 160' fill='none' stroke='emerald' stroke-width='4'/></svg>" class="guide" alt="Letter Q guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasQ')" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter R -->
+            <div class="page" data-page="35">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-red-400 mb-2">Letter R</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-red-400 mb-8 bounce-animation">R</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/5276/5276266.png" alt="Rabbit"
+                                class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div
+                                class="absolute -bottom-4 -right-4 bg-red-200 text-red-800 px-3 py-1 rounded-full text-sm font-bold">
+                                Rabbit</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">R is for Rabbit! Listen to the sound:</p>
+                    <button onclick="playSound('R')"
+                        class="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> R says "r"
+                    </button>
+                </div>
+            </div>
+
+            <div class="page" data-page="36">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-red-400 mb-2">Trace Letter R</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter R</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasR" width="200" height="200"
+                            class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M40 20 L40 180 M40 20 Q100 20 100 100 Q100 100 40 100 M100 100 L160 180' fill='none' stroke='red' stroke-width='4'/></svg>"
+                            class="guide" alt="Letter R guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasR')"
+                        class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter S -->
+            <div class="page" data-page="37">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-yellow-400 mb-2">Letter S</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-yellow-400 mb-8 bounce-animation">S</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/5375/5375895.png" alt="Snake"
+                                class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div
+                                class="absolute -bottom-4 -right-4 bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm font-bold">
+                                Snake</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">S is for Snake! Listen to the sound:</p>
+                    <button onclick="playSound('S')"
+                        class="bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> S says "s"
+                    </button>
+                </div>
+            </div>
+
+            <div class="page" data-page="38">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-yellow-400 mb-2">Trace Letter S</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter S</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasS" width="200" height="200"
+                            class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M160 40 Q100 20 60 60 Q100 100 60 140 Q100 180 160 140' fill='none' stroke='yellow' stroke-width='4'/></svg>"
+                            class="guide" alt="Letter S guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasS')"
+                        class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter T -->
+            <div class="page" data-page="39">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-green-400 mb-2">Letter T</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-green-400 mb-8 bounce-animation">T</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1998/1998804.png" alt="Tiger"
+                                class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div
+                                class="absolute -bottom-4 -right-4 bg-green-200 text-green-800 px-3 py-1 rounded-full text-sm font-bold">
+                                Tiger</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">T is for Tiger! Listen to the sound:</p>
+                    <button onclick="playSound('T')"
+                        class="bg-green-400 hover:bg-green-500 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> T says "t"
+                    </button>
+                </div>
+            </div>
+
+            <div class="page" data-page="40">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-green-400 mb-2">Trace Letter T</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter T</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasT" width="200" height="200"
+                            class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M100 20 L100 180 M40 20 L160 20' fill='none' stroke='green' stroke-width='4'/></svg>"
+                            class="guide" alt="Letter T guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasT')"
+                        class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter U -->
+            <div class="page" data-page="41">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-purple-400 mb-2">Letter U</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-purple-400 mb-8 bounce-animation">U</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/8323/8323822.png" alt="Umbrella"
+                                class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div
+                                class="absolute -bottom-4 -right-4 bg-purple-200 text-purple-800 px-3 py-1 rounded-full text-sm font-bold">
+                                Umbrella</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">U is for Umbrella! Listen to the sound:</p>
+                    <button onclick="playSound('U')"
+                        class="bg-purple-400 hover:bg-purple-500 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> U says "uh"
+                    </button>
+                </div>
+            </div>
+
+            <div class="page" data-page="42">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-purple-400 mb-2">Trace Letter U</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter U</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasU" width="200" height="200"
+                            class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M40 20 Q40 180 100 180 Q160 180 160 20' fill='none' stroke='purple' stroke-width='4'/></svg>"
+                            class="guide" alt="Letter U guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasU')"
+                        class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter V -->
+            <div class="page" data-page="43">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-indigo-400 mb-2">Letter V</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-indigo-400 mb-8 bounce-animation">V</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/575/575684.png" alt="Van"
+                                class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div
+                                class="absolute -bottom-4 -right-4 bg-indigo-200 text-indigo-800 px-3 py-1 rounded-full text-sm font-bold">
+                                Van</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">V is for Van! Listen to the sound:</p>
+                    <button onclick="playSound('V')"
+                        class="bg-indigo-400 hover:bg-indigo-500 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> V says "v"
+                    </button>
+                </div>
+            </div>
+
+            <div class="page" data-page="44">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-indigo-400 mb-2">Trace Letter V</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter V</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasV" width="200" height="200"
+                            class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M40 20 L100 180 L160 20' fill='none' stroke='indigo' stroke-width='4'/></svg>"
+                            class="guide" alt="Letter V guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasV')"
+                        class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter W -->
+            <div class="page" data-page="45">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-teal-400 mb-2">Letter W</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-teal-400 mb-8 bounce-animation">W</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/4971/4971976.png" alt="Whale"
+                                class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div
+                                class="absolute -bottom-4 -right-4 bg-teal-200 text-teal-800 px-3 py-1 rounded-full text-sm font-bold">
+                                Whale</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">W is for Whale! Listen to the sound:</p>
+                    <button onclick="playSound('W')"
+                        class="bg-teal-400 hover:bg-teal-500 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> W says "w"
+                    </button>
+                </div>
+            </div>
+
+            <div class="page" data-page="46">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-teal-400 mb-2">Trace Letter W</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter W</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasW" width="200" height="200"
+                            class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M40 180 L40 20 L100 100 L160 20 L160 180' fill='none' stroke='teal' stroke-width='4'/></svg>"
+                            class="guide" alt="Letter W guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasW')"
+                        class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter X -->
+            <div class="page" data-page="47">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-orange-400 mb-2">Letter X</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-orange-400 mb-8 bounce-animation">X</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/5445/5445260.png" alt="Xylophone"
+                                class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div
+                                class="absolute -bottom-4 -right-4 bg-orange-200 text-orange-800 px-3 py-1 rounded-full text-sm font-bold">
+                                Xylophone</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">X is for Xylophone! Listen to the sound:</p>
+                    <button onclick="playSound('X')"
+                        class="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> X says "ks"
+                    </button>
+                </div>
+            </div>
+
+            <div class="page" data-page="48">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-orange-400 mb-2">Trace Letter X</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter X</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasX" width="200" height="200"
+                            class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M40 20 L160 180 M160 20 L40 180' fill='none' stroke='orange' stroke-width='4'/></svg>"
+                            class="guide" alt="Letter X guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasX')"
+                        class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter Y -->
+            <div class="page" data-page="49">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-lime-400 mb-2">Letter Y</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-lime-400 mb-8 bounce-animation">Y</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1998/1998812.png" alt="Yak"
+                                class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div
+                                class="absolute -bottom-4 -right-4 bg-lime-200 text-lime-800 px-3 py-1 rounded-full text-sm font-bold">
+                                Yak</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">Y is for Yak! Listen to the sound:</p>
+                    <button onclick="playSound('Y')"
+                        class="bg-lime-400 hover:bg-lime-500 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> Y says "y"
+                    </button>
+                </div>
+            </div>
+
+            <div class="page" data-page="50">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-lime-400 mb-2">Trace Letter Y</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter Y</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasY" width="200" height="200"
+                            class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M40 20 L160 180 M100 20 L100 100 L160 180' fill='none' stroke='lime' stroke-width='4'/></svg>"
+                            class="guide" alt="Letter Y guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasY')"
+                        class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Letter Z -->
+            <div class="page" data-page="51">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-pink-400 mb-2">Letter Z</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <div class="text-9xl font-bold text-pink-400 mb-8 bounce-animation">Z</div>
+                    <div class="flex justify-center mb-8">
+                        <div class="relative">
+                            <img src="https://cdn-icons-png.flaticon.com/512/1998/1998813.png" alt="Zebra"
+                                class="w-32 h-32 wiggle-animation" style="animation-delay: 0.2s">
+                            <div
+                                class="absolute -bottom-4 -right-4 bg-pink-200 text-pink-800 px-3 py-1 rounded-full text-sm font-bold">
+                                Zebra</div>
+                        </div>
+                    </div>
+                    <p class="text-xl text-gray-700 mb-8">Z is for Zebra! Listen to the sound:</p>
+                    <button onclick="playSound('Z')"
+                        class="bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-6 rounded-full mb-8 shadow-md">
+                        <i class="fas fa-volume-up mr-2"></i> Z says "z"
+                    </button>
+                </div>
+            </div>
+
+            <div class="page" data-page="52">
+                <div class="text-center">
+                    <h2 class="text-4xl font-bold text-pink-400 mb-2">Trace Letter Z</h2>
+                    <div class="flex justify-center space-x-4 mb-6">
+                        <button onclick="prevPage()"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button onclick="nextPage()"
+                            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-md">
+                            Next <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    <p class="text-lg text-gray-700 mb-6">Use your finger or mouse to trace the letter Z</p>
+                    <div class="letter-trace mb-8">
+                        <canvas id="traceCanvasZ" width="200" height="200"
+                            class="border-2 border-gray-200 rounded-lg"></canvas>
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M40 20 L160 20 L40 180 L160 180' fill='none' stroke='pink' stroke-width='4'/></svg>"
+                            class="guide" alt="Letter Z guide">
+                    </div>
+                    <button onclick="clearCanvas('traceCanvasZ')"
+                        class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full shadow-md mr-4">
+                        <i class="fas fa-eraser mr-2"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <!-- Thank You Page -->
+            <div class="page" data-page="53">
+                <div class="text-center">
+                    <div class="relative z-10">
+                        <h1 class="text-5xl font-bold text-purple-600 mb-6 animate-bounce">You Did It!</h1>
+                        <p class="text-xl text-gray-700 mb-8">You've learned all the letters from A to Z 🎉</p>
+                        <div class="flex justify-center space-x-4">
+                            <div class="text-6xl text-red-500 float-animation">A</div>
+                            <div class="text-6xl text-yellow-500 float-animation" style="animation-delay: 0.3s">B</div>
+                            <div class="text-6xl text-green-500 float-animation" style="animation-delay: 0.6s">C</div>
+                            <div class="text-6xl text-blue-500 float-animation" style="animation-delay: 0.9s">Z</div>
+                        </div>
+                        <div class="mt-8">
+                            <button onclick="window.location.reload()"
+                                class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg transform transition hover:scale-105">
+                                <i class="fas fa-redo mr-2"></i> Play Again
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <script>
+                    let currentPage = 0;
+                    const totalPages = document.querySelectorAll('.page').length;
+
+                    function showPage(pageNum) {
+                        document.querySelectorAll('.page').forEach((page, index) => {
+                            page.classList.toggle('active', index === pageNum);
+                        });
+
+                        // Update progress dots
+                        document.querySelectorAll('.progress-dot').forEach((dot, index) => {
+                            dot.classList.toggle('active', index === pageNum);
+                        });
+                    }
+
+                    function playButtonSound() {
+                        const buttonSound = document.getElementById("buttonSound");
+                        if (buttonSound) {
+                        buttonSound.currentTime = 0; // Rewind to start
+                        buttonSound.play();
+                        }
+                    }                    
+
+                    function nextPage() {
+                        if (currentPage < totalPages - 1) {
+                            playButtonSound();
+                            currentPage++;
+                            showPage(currentPage);
+                        }
+                    }
+
+                    function prevPage() {
+                        if (currentPage > 0) {
+                            playButtonSound();
+                            currentPage--;
+                            showPage(currentPage);
+                        }
+                    }
+
+                    function playSound(letter) {
+                        const sounds = {
+                            A: 'sound/A.mp3',
+                            B: 'sound/B.mp3',
+                            C: 'sound/C.mp3',
+                            D: 'sound/D.mp3',
+                            E: 'sound/E.mp3',
+                            F: 'sound/F.mp3',
+                            G: 'sound/G.mp3',
+                            H: 'sound/H.mp3',
+                            I: 'sound/I.mp3',
+                            J: 'sound/J.mp3',
+                            K: 'sound/K.mp3',
+                            L: 'sound/L.mp3',
+                            M: 'sound/M.mp3',
+                            N: 'sound/N.mp3',
+                            O: 'sound/O.mp3',
+                            P: 'sound/P.mp3',
+                            Q: 'sound/Q.mp3',
+                            R: 'sound/R.mp3',
+                            S: 'sound/S.mp3',
+                            T: 'sound/T.mp3',
+                            U: 'sound/U.mp3',
+                            V: 'sound/V.mp3',
+                            W: 'sound/W.mp3',
+                            X: 'sound/X.mp3',
+                            Y: 'sound/Y.mp3',
+                            Z: 'sound/Z.mp3'
+                        };
+
+                        const audio = new Audio(sounds[letter]);
+                        audio.play();
+                    }
+
+                    function clearCanvas(canvasId) {
+                        const canvas = document.getElementById(canvasId);
+                        const ctx = canvas.getContext('2d');
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    }
+
+                    document.addEventListener('DOMContentLoaded', () => {
+                        showPage(currentPage);
+
+                        // Add tracing functionality to all canvases
+                        document.querySelectorAll('.letter-trace canvas').forEach(canvas => {
+                            let drawing = false;
+                            let ctx = canvas.getContext('2d');
+                            let last = { x: 0, y: 0 };
+
+                            function getPos(e) {
+                                if (e.touches && e.touches.length) {
+                                    const rect = canvas.getBoundingClientRect();
+                                    return {
+                                        x: e.touches[0].clientX - rect.left,
+                                        y: e.touches[0].clientY - rect.top
+                                    };
+                                } else {
+                                    const rect = canvas.getBoundingClientRect();
+                                    return {
+                                        x: e.clientX - rect.left,
+                                        y: e.clientY - rect.top
+                                    };
+                                }
+                            }
+
+                            function start(e) {
+                                drawing = true;
+                                last = getPos(e);
+                            }
+                            function move(e) {
+                                if (!drawing) return;
+                                e.preventDefault();
+                                const pos = getPos(e);
+                                ctx.strokeStyle = '#222';
+                                ctx.lineWidth = 4;
+                                ctx.lineCap = 'round';
+                                ctx.beginPath();
+                                ctx.moveTo(last.x, last.y);
+                                ctx.lineTo(pos.x, pos.y);
+                                ctx.stroke();
+                                last = pos;
+                            }
+                            function end() {
+                                drawing = false;
+                            }
+
+                            canvas.addEventListener('mousedown', start);
+                            canvas.addEventListener('mousemove', move);
+                            canvas.addEventListener('mouseup', end);
+                            canvas.addEventListener('mouseleave', end);
+                            canvas.addEventListener('touchstart', start, { passive: false });
+                            canvas.addEventListener('touchmove', move, { passive: false });
+                            canvas.addEventListener('touchend', end);
+                        });
+                    });
+                </script>
+    <audio id="buttonSound" src="sound/button.mp3"></audio>
+</body>
+</html>
